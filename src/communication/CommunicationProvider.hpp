@@ -1,4 +1,6 @@
 #pragma once
+#include <array>
+#include <memory>
 #include <QObject>
 #include <QBluetoothSocket>
 #include <player_protocol/Message.hpp>
@@ -16,9 +18,13 @@ namespace communication {
 
     private:
         void handleNewData();
+        void emitFailedToRead();
+        void emitFailedToSend();
+
+        static std::array<char, 1024> dataBuffer;
 
         QBluetoothSocket* socket;
-        QByteArray currentData;
-        std::size_t remainingToRead;
+        std::size_t nextMessageSize;
+        std::unique_ptr<player_protocol::Message> lastMessage;
     };
 }

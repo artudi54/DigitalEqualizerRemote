@@ -5,12 +5,13 @@
 namespace model {
     class PlayerModel : public QObject {
         Q_OBJECT
-        Q_PROPERTY(PlayState   playState     READ getPlayState     NOTIFY playStateChanged)
-        Q_PROPERTY(double      currentTime   READ getCurrentTime   NOTIFY currentTimeChanged)
-        Q_PROPERTY(double      totalTime     READ getTotalTime     NOTIFY totalTimeChanged)
-        Q_PROPERTY(QStringList playlist      READ getPlaylist      NOTIFY playlistChanged)
-        Q_PROPERTY(int         currentIndex  READ getCurrentIndex  NOTIFY currentIndexChanged)
-        Q_PROPERTY(QString     currentMedium READ getCurrentMedium NOTIFY currentMediumChanged)
+        Q_PROPERTY(PlayState     playState     READ getPlayState     NOTIFY playStateChanged)
+        Q_PROPERTY(double        currentTime   READ getCurrentTime   NOTIFY currentTimeChanged)
+        Q_PROPERTY(double        totalTime     READ getTotalTime     NOTIFY totalTimeChanged)
+        Q_PROPERTY(std::uint32_t volume        READ getVolume        NOTIFY volumeChanged)
+        Q_PROPERTY(QStringList   playlist      READ getPlaylist      NOTIFY playlistChanged)
+        Q_PROPERTY(int           currentIndex  READ getCurrentIndex  NOTIFY currentIndexChanged)
+        Q_PROPERTY(QString       currentMedium READ getCurrentMedium NOTIFY currentMediumChanged)
     public:
         explicit PlayerModel(QObject* parent = nullptr);
 

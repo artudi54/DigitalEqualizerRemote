@@ -10,7 +10,7 @@ set(SOURCES
     src/main.cpp
 )
 set(HEADERS
-        src/model/PlayerModel.cpp src/model/PlayerModel.hpp src/model/PlayState.hpp src/DigitalEqualizerRemoteApplication.cpp src/DigitalEqualizerRemoteApplication.hpp src/communication/ResponseHandler.cpp src/communication/ResponseHandler.hpp src/communication/DeviceConnector.cpp src/communication/DeviceConnector.hpp src/communication/CommunicationProvider.cpp src/communication/CommunicationProvider.hpp src/communication/RequestSender.cpp src/communication/RequestSender.hpp src/model/ConnectionModel.cpp src/model/ConnectionModel.hpp)
+        src/model/PlayerModel.cpp src/model/PlayerModel.hpp src/model/PlayState.hpp src/DigitalEqualizerRemoteApplication.cpp src/DigitalEqualizerRemoteApplication.hpp src/communication/ResponseHandler.cpp src/communication/ResponseHandler.hpp src/communication/DeviceConnector.cpp src/communication/DeviceConnector.hpp src/communication/CommunicationProvider.cpp src/communication/CommunicationProvider.hpp src/communication/RequestSender.cpp src/communication/RequestSender.hpp src/model/ConnectionModel.cpp src/model/ConnectionModel.hpp src/controller/PlayerController.cpp src/controller/PlayerController.hpp)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Compile options

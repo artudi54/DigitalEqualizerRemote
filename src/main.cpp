@@ -1,27 +1,32 @@
 #include <DigitalEqualizerRemoteApplication.hpp>
-#include <communication/DeviceConnector.hpp>
-#include <communication/ResponseHandler.hpp>
+#include <controller/PlayerController.hpp>
+#include <model/ConnectionModel.hpp>
 #include <model/PlayerModel.hpp>
-using namespace std::literals;
 
+void handleStartedConnecting() {
+    qDebug() << "Started connecting";
+}
 
-void printError(const QString& message) {
+void handleConnected() {
+    qDebug() << "Connected";
+}
+
+void handleError(const QString& message) {
     qDebug() << "Error:" << message.toStdString().c_str();
 }
 
 int main(int argc, char** argv) {
     DigitalEqualizerRemoteApplication app(argc, argv);
-    model::PlayerModel model;
-    communication::ResponseHandler responseHandler(model);
 
-    communication::DeviceConnector connector;
+    model::ConnectionModel connectionModel;
+    model::PlayerModel playerModel;
+    controller::PlayerController playerController(connectionModel, playerModel);
 
-    QObject::connect(&connector, &communication::DeviceConnector::found, [&] {
-        QBluetoothSocket* socket = connector.retrieveSocket();
-        qDebug() << "Connected: " <<  socket->peerAddress();
-    });
-    QObject::connect(&connector, &communication::DeviceConnector::errorOccurred, &printError);
+    QObject::connect(&connectionModel, &model::ConnectionModel::startedConnecting, &handleStartedConnecting);
+    QObject::connect(&connectionModel, &model::ConnectionModel::connected, &handleConnected);
+    QObject::connect(&connectionModel, &model::ConnectionModel::errorOccurred, &handleError);
 
-    connector.find("DigitalEqualizer");
+    playerController.connectToHost();
+
     return app.exec();
 }

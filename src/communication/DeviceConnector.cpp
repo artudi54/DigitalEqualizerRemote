@@ -78,6 +78,7 @@ namespace communication {
     void DeviceConnector::handleConnectionError() {
         QString message = socket->errorString();
         socket->deleteLater();
+        socket = nullptr;
         unsetParameters();
         emit errorOccurred(message);
     }
@@ -89,6 +90,5 @@ namespace communication {
         bluetoothAddress.clear();
         bluetoothUuid = QBluetoothUuid();
         localDevice = nullptr;
-        socket = nullptr;
     }
 }

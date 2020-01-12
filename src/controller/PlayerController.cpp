@@ -20,6 +20,63 @@ namespace controller {
         connectionModel.notifyStartedConnecting();
     }
 
+    void PlayerController::switchPlayState() {
+        if (!playerModel.hasValidIndex())
+            return;
+        if (playerModel.getPlayState() == model::PlayState::PLAYING)
+            requestSender->sendPauseRequest();
+        else if (playerModel.getPlayState() == model::PlayState::PAUSED || playerModel.getPlayState() == model::PlayState::STOPPED)
+            requestSender->sendPlayRequest();
+    }
+
+    void PlayerController::stopPlayer() {
+        if (!playerModel.hasValidIndex())
+            return;
+        if (playerModel.getPlayState() != model::PlayState::STOPPED)
+            requestSender->sendStopRequest();
+    }
+
+    void PlayerController::playNext() {
+        if (!playerModel.hasValidIndex())
+            return;
+        if (playerModel.getCurrentIndex() == playerModel.getPlaylist().size() - 1)
+            return;
+        requestSender->sendChangeMediumRequest(playerModel.getPlaylist()[playerModel.getCurrentIndex() + 1]);
+        if (playerModel.getPlayState() == model::PlayState::PLAYING)
+            requestSender->sendPlayRequest();
+    }
+
+    void PlayerController::playPrevious() {
+
+    }
+
+    void PlayerController::setPlayerVolume(unsigned volume) {
+        if (volume > 100)
+            return;
+        if (volume == playerModel.getVolume())
+            return;
+        requestSender->sendChangeVolumeRequest(volume);
+    }
+
+    void PlayerController::setPlayedSource(unsigned idx) {
+        qDebug() << "Selected source:" << idx;
+        if (idx >= static_cast<unsigned>(playerModel.getPlaylist().size()))
+            return;
+        if (static_cast<int>(idx) == playerModel.getCurrentIndex())
+            return;
+        requestSender->sendChangeMediumRequest(playerModel.getPlaylist()[static_cast<int>(idx)]);
+        qDebug() << "Selected source sent:" << idx;
+
+    }
+
+    void PlayerController::seekPlayerPosition(double time) {
+        if (time > playerModel.getTotalTime())
+            return;
+        if (time == playerModel.getCurrentTime())
+            return;
+        requestSender->sendSeekRequest(time);
+    }
+
     void PlayerController::setupConnection(QBluetoothSocket *bluetoothSocket) {
         communicationProvider = new communication::CommunicationProvider(bluetoothSocket, this);
         requestSender = new communication::RequestSender(communicationProvider, this);
@@ -37,6 +94,6 @@ namespace controller {
     }
 
     void PlayerController::handleFatalError(const QString &message) {
-        // todo
+        qDebug() << "Error:" << message.toStdString().c_str();
     }
 }

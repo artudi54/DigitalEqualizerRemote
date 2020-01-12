@@ -40,11 +40,11 @@ namespace model {
         emit totalTimeChanged();
     }
 
-    std::uint32_t PlayerModel::getVolume() const {
+    unsigned PlayerModel::getVolume() const {
         return volume;
     }
 
-    void PlayerModel::setVolume(std::uint32_t volume) {
+    void PlayerModel::setVolume(unsigned volume) {
         if (this->volume == volume)
             return;
         if (volume > 100)
@@ -64,6 +64,10 @@ namespace model {
         emit playlistChanged();
     }
 
+    bool PlayerModel::hasValidIndex() const {
+        return currentIndex != -1;
+    }
+
     int PlayerModel::getCurrentIndex() const {
         return currentIndex;
     }
@@ -81,6 +85,7 @@ namespace model {
             throw std::invalid_argument("Index: " + std::to_string(currentIndex) + " not found in playlist");
         this->currentIndex = currentIndex;
         emit currentIndexChanged();
+        emit currentMediumChanged();
     }
 
     void PlayerModel::setCurrentMedium(const QString &medium) {

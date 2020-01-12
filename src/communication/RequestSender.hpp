@@ -8,12 +8,12 @@ namespace communication {
     public:
         explicit RequestSender(CommunicationProvider* communicationProvider, QObject* parent = nullptr);
 
-        void sendChangeMediumRequest(const std::string& newMedium);
+        void sendChangeMediumRequest(const QString& newMedium);
         void sendChangeVolumeRequest(std::uint32_t newVolume);
         void sendPauseRequest();
         void sendPlaylistRequest();
         void sendPlayRequest();
-        void sendSeekRequest(float position);
+        void sendSeekRequest(double position);
         void sendStopRequest();
 
     private:

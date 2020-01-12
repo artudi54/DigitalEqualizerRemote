@@ -1,6 +1,7 @@
 #include "DigitalEqualizerRemoteApplication.hpp"
 #include <QLoggingCategory>
 #include <QQmlEngine>
+#include <QQuickStyle>
 #include <model/PlayerModel.hpp>
 #include <model/PlayState.hpp>
 

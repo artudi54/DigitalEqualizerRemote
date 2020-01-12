@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(DigitalEqualizerRemote VERSION 1.0.0 LANGUAGES CXX)
 
 # Dependencies
-find_package(Qt5 HINTS $ENV{QTDIR} COMPONENTS Bluetooth Core Gui Qml Quick REQUIRED)
+find_package(Qt5 HINTS $ENV{QTDIR} COMPONENTS Bluetooth Core Gui Qml Quick QuickControls2 REQUIRED)
 add_subdirectory(lib/player-protocol)
 
 # Executable
@@ -10,8 +10,11 @@ set(SOURCES
     src/main.cpp
 )
 set(HEADERS
-        src/model/PlayerModel.cpp src/model/PlayerModel.hpp src/model/PlayState.hpp src/DigitalEqualizerRemoteApplication.cpp src/DigitalEqualizerRemoteApplication.hpp src/communication/ResponseHandler.cpp src/communication/ResponseHandler.hpp src/communication/DeviceConnector.cpp src/communication/DeviceConnector.hpp src/communication/CommunicationProvider.cpp src/communication/CommunicationProvider.hpp src/communication/RequestSender.cpp src/communication/RequestSender.hpp src/model/ConnectionModel.cpp src/model/ConnectionModel.hpp src/controller/PlayerController.cpp src/controller/PlayerController.hpp)
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+    src/model/PlayerModel.cpp src/model/PlayerModel.hpp src/model/PlayState.hpp src/DigitalEqualizerRemoteApplication.cpp src/DigitalEqualizerRemoteApplication.hpp src/communication/ResponseHandler.cpp src/communication/ResponseHandler.hpp src/communication/DeviceConnector.cpp src/communication/DeviceConnector.hpp src/communication/CommunicationProvider.cpp src/communication/CommunicationProvider.hpp src/communication/RequestSender.cpp src/communication/RequestSender.hpp src/model/ConnectionModel.cpp src/model/ConnectionModel.hpp src/controller/PlayerController.cpp src/controller/PlayerController.hpp src/DigitalEqualizerRemote.cpp src/DigitalEqualizerRemote.hpp)
+set(RESOURCES
+    resources.qrc
+)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
 
 # Compile options
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
@@ -37,5 +40,5 @@ PRIVATE
     src
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Bluetooth Qt5::Core Qt5::Gui Qt5::Qml Qt5::Quick player-protocol)
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Bluetooth Qt5::Core Qt5::Gui Qt5::Qml Qt5::Quick Qt5::QuickControls2 player-protocol)
 

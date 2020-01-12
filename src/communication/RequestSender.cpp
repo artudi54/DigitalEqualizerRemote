@@ -13,8 +13,8 @@ namespace communication {
         , communicationProvider(communicationProvider)
     {}
 
-    void RequestSender::sendChangeMediumRequest(const std::string &newMedium) {
-        communicationProvider->sendMessage(player_protocol::request::ChangeMediumRequest(newMedium));
+    void RequestSender::sendChangeMediumRequest(const QString &newMedium) {
+        communicationProvider->sendMessage(player_protocol::request::ChangeMediumRequest(newMedium.toStdString()));
     }
 
     void RequestSender::sendChangeVolumeRequest(std::uint32_t newVolume) {
@@ -33,8 +33,8 @@ namespace communication {
         communicationProvider->sendMessage(player_protocol::request::PlayRequest());
     }
 
-    void RequestSender::sendSeekRequest(float position) {
-        communicationProvider->sendMessage(player_protocol::request::SeekRequest(position));
+    void RequestSender::sendSeekRequest(double position) {
+        communicationProvider->sendMessage(player_protocol::request::SeekRequest(static_cast<float>(position)));
     }
 
     void RequestSender::sendStopRequest() {

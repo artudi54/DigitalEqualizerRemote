@@ -8,7 +8,7 @@ namespace model {
         Q_PROPERTY(PlayState     playState     READ getPlayState     NOTIFY playStateChanged)
         Q_PROPERTY(double        currentTime   READ getCurrentTime   NOTIFY currentTimeChanged)
         Q_PROPERTY(double        totalTime     READ getTotalTime     NOTIFY totalTimeChanged)
-        Q_PROPERTY(std::uint32_t volume        READ getVolume        NOTIFY volumeChanged)
+        Q_PROPERTY(unsigned      volume        READ getVolume        NOTIFY volumeChanged)
         Q_PROPERTY(QStringList   playlist      READ getPlaylist      NOTIFY playlistChanged)
         Q_PROPERTY(int           currentIndex  READ getCurrentIndex  NOTIFY currentIndexChanged)
         Q_PROPERTY(QString       currentMedium READ getCurrentMedium NOTIFY currentMediumChanged)
@@ -22,12 +22,13 @@ namespace model {
         [[nodiscard]] double getTotalTime() const;
         void setTimeRange(double currentTime, double totalTime);
 
-        [[nodiscard]] std::uint32_t getVolume() const;
-        void setVolume(std::uint32_t volume);
+        [[nodiscard]] unsigned getVolume() const;
+        void setVolume(unsigned volume);
 
         [[nodiscard]] const QStringList &getPlaylist() const;
         void setPlaylist(const QStringList &playlist);
 
+        [[nodiscard]] bool hasValidIndex() const;
         [[nodiscard]] int getCurrentIndex() const;
         [[nodiscard]] QString getCurrentMedium() const;
         void setCurrentIndex(int currentIndex);
@@ -46,7 +47,7 @@ namespace model {
         PlayState playState;
         double currentTime;
         double totalTime;
-        std::uint32_t volume;
+        unsigned volume;
         QStringList playlist;
         int currentIndex;
     };

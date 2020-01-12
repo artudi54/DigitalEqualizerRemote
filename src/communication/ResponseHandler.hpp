@@ -15,6 +15,7 @@ namespace communication {
 
     private:
         void handleMessage(const player_protocol::changed::MediumChangedMessage &message) override;
+        void handleMessage(const player_protocol::changed::PlayerStateChangedMessage &message) override;
         void handleMessage(const player_protocol::changed::TimeChangedMessage &message) override;
         void handleMessage(const player_protocol::changed::VolumeChangedMessage &message) override;
 

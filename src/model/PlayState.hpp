@@ -4,6 +4,7 @@
 namespace model {
     Q_NAMESPACE
     enum class PlayState {
+        NO_MEDIA,
         STOPPED,
         PLAYING,
         PAUSED

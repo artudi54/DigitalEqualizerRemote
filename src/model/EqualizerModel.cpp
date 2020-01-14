@@ -59,7 +59,15 @@ namespace model {
         return dbGain;
     }
 
+    const EqualizerBand* EqualizerModel::getDbGain() const {
+        return dbGain;
+    }
+
     QList<EqualizerBand*>& EqualizerModel::getFrequencyDbGains() {
+        return frequencyDbGains;
+    }
+
+    const QList<EqualizerBand*>& EqualizerModel::getFrequencyDbGains() const {
         return frequencyDbGains;
     }
 

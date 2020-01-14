@@ -14,6 +14,7 @@ namespace communication {
         void errorOccurred(const QString& message);
 
     private:
+        void handleMessage(const player_protocol::changed::EqualizerParametersChanged &message) override;
         void handleMessage(const player_protocol::changed::MediumChangedMessage &message) override;
         void handleMessage(const player_protocol::changed::PlayerStateChangedMessage &message) override;
         void handleMessage(const player_protocol::changed::TimeChangedMessage &message) override;

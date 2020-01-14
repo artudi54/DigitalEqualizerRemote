@@ -32,7 +32,10 @@ namespace model {
         explicit EqualizerModel(QObject* parent = nullptr);
 
         [[nodiscard]] EqualizerBand* getDbGain();
+        [[nodiscard]] const EqualizerBand* getDbGain() const;
+
         [[nodiscard]] QList<EqualizerBand*>& getFrequencyDbGains();
+        [[nodiscard]] const QList<EqualizerBand*>& getFrequencyDbGains() const;
         [[nodiscard]] QList<QObject*> getFrequencyDbGainsObj();
 
     private:

@@ -83,13 +83,13 @@ namespace controller {
         if (idx > static_cast<unsigned>(bands.size()))
             return;
         bands[static_cast<int>(idx)]->setValue(value);
-        //todo: send
+        requestSender->sendChangeEqualizerParametersRequest(playerModel.getEqualizerParameters());
     }
 
     void PlayerController::setOverallGainValue(double value) {
         model::EqualizerBand* overallGainBand = playerModel.getEqualizerParameters()->getDbGain();
         overallGainBand->setValue(value);
-        //todo: send
+        requestSender->sendChangeEqualizerParametersRequest(playerModel.getEqualizerParameters());
     }
 
     void PlayerController::resetEqualizer() {
@@ -98,7 +98,7 @@ namespace controller {
         for (auto band : bands)
             band->setValue(0.0);
         overallGainBand->setValue(0.0);
-        //todo: send
+        requestSender->sendChangeEqualizerParametersRequest(playerModel.getEqualizerParameters());
     }
 
     void PlayerController::errorCloseApplication() {
@@ -113,6 +113,7 @@ namespace controller {
         connect(communicationProvider, &communication::CommunicationProvider::messageReceived, responseHandler, &communication::ResponseHandler::handleResponse);
         connect(communicationProvider, &communication::CommunicationProvider::errorOccurred, this, &PlayerController::handleFatalError);
 
+        requestSender->sendResetRequest();
         requestSender->sendPlaylistRequest();
         connectionModel.notifyConnected();
     }

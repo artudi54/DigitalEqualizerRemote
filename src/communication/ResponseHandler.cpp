@@ -1,5 +1,6 @@
 #include "ResponseHandler.hpp"
 #include <algorithm>
+#include <player_protocol/changed/EqualizerParametersChanged.hpp>
 #include <player_protocol/changed/MediumChangedMessage.hpp>
 #include <player_protocol/changed/PlayerStateChangedMessage.hpp>
 #include <player_protocol/changed/TimeChangedMessage.hpp>
@@ -17,6 +18,19 @@ namespace communication {
 
     void ResponseHandler::handleResponse(const player_protocol::Message &message) {
         message.visit(*this);
+    }
+
+    void ResponseHandler::handleMessage(const player_protocol::changed::EqualizerParametersChanged &message) {
+        qDebug() << "new equalizer parameters";
+        try {
+            model::EqualizerModel* eqModel = playerModel.getEqualizerParameters();
+            eqModel->getDbGain()->setValue(message.getParameters().getGainDb());
+            for (std::size_t i = 0; i < 10; ++i)
+                eqModel->getFrequencyDbGains()[static_cast<int>(i)]->setValue(message.getParameters().getGainDbAt(i));
+        }
+        catch (std::invalid_argument& exc) {
+            emit errorOccurred(QString::fromUtf8(exc.what()));
+        }
     }
 
     void ResponseHandler::handleMessage(const player_protocol::changed::MediumChangedMessage &message) {

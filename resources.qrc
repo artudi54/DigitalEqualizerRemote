@@ -3,5 +3,15 @@
         <file>qml/Player.qml</file>
         <file>qml/Playlist.qml</file>
         <file>qml/main.qml</file>
+        <file>qml/EqualizerBandControl.qml</file>
+        <file>qml/Equalizer.qml</file>
+        <file>qml/TitleLabel.qml</file>
+        <file>qml/DescriptiveDial.qml</file>
+        <file>resources/icons/stop.png</file>
+        <file>resources/icons/previous.png</file>
+        <file>resources/icons/play.png</file>
+        <file>resources/icons/pause.png</file>
+        <file>resources/icons/next.png</file>
+        <file>qml/ImageButton.qml</file>
     </qresource>
 </RCC>

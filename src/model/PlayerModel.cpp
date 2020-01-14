@@ -1,14 +1,20 @@
 #include "PlayerModel.hpp"
+#include <sstream>
+#include <cmath>
+#include <iomanip>
 
 namespace model {
     PlayerModel::PlayerModel(QObject* parent)
         : QObject(parent)
         , playState(PlayState::STOPPED)
         , currentTime(0.0)
+        , currentTimeLabel("00:00")
         , totalTime(0.0)
+        , totalTimeLabel("00:00")
         , volume(100)
         , playlist()
-        , currentIndex(-1) {}
+        , currentIndex(-1)
+        , equalizerParameters(new EqualizerModel(this)){}
 
     PlayState PlayerModel::getPlayState() const {
         return playState;
@@ -25,8 +31,17 @@ namespace model {
         return currentTime;
     }
 
+
+    QString PlayerModel::getCurrentTimeLabel() const {
+        return currentTimeLabel;
+    }
+
     double PlayerModel::getTotalTime() const {
         return totalTime;
+    }
+
+    QString PlayerModel::getTotalTimeLabel() const {
+        return totalTimeLabel;
     }
 
     void PlayerModel::setTimeRange(double currentTime, double totalTime) {
@@ -35,9 +50,13 @@ namespace model {
         if (currentTime > totalTime)
             throw std::invalid_argument("Invalid time range: " + std::to_string(currentTime) + ":" + std::to_string(totalTime));
         this->currentTime = currentTime;
+        this->currentTimeLabel = formatTime(currentTime);
         this->totalTime = totalTime;
+        this->totalTimeLabel = formatTime(totalTime);
         emit currentTimeChanged();
+        emit currentTimeLabelChanged();
         emit totalTimeChanged();
+        emit totalTimeLabelChanged();
     }
 
     unsigned PlayerModel::getVolume() const {
@@ -89,10 +108,25 @@ namespace model {
     }
 
     void PlayerModel::setCurrentMedium(const QString &medium) {
+        if (medium.isEmpty())
+            setCurrentIndex(-1);
         auto it = std::find(playlist.begin(), playlist.end(), medium);
         if (it == playlist.end()) {
             throw std::invalid_argument("Medium: " + medium.toStdString() + " not found in playlist");
         }
         setCurrentIndex(static_cast<int>(it - playlist.begin()));
+    }
+
+    EqualizerModel* PlayerModel::getEqualizerParameters() {
+        return equalizerParameters;
+    }
+
+    QString PlayerModel::formatTime(double time) {
+        unsigned minutes = static_cast<unsigned>(time / 60.0);
+        unsigned seconds = static_cast<unsigned>(std::fmod(time, 60.0));
+        std::stringstream ss;
+        ss << std::setw(2) << std::setfill('0') <<  minutes << ":"
+           << std::setw(2) << std::setfill('0') << seconds;
+        return QString::fromStdString(ss.str());
     }
 }

@@ -1,4 +1,5 @@
 #include "PlayerController.hpp"
+#include <QCoreApplication>
 #include <communication/DeviceConnector.hpp>
 
 namespace controller {
@@ -75,6 +76,33 @@ namespace controller {
         if (time == playerModel.getCurrentTime())
             return;
         requestSender->sendSeekRequest(time);
+    }
+
+    void PlayerController::setEqualizerBandValue(double value, unsigned idx) {
+        QList<model::EqualizerBand*>& bands = playerModel.getEqualizerParameters()->getFrequencyDbGains();
+        if (idx > static_cast<unsigned>(bands.size()))
+            return;
+        bands[static_cast<int>(idx)]->setValue(value);
+        //todo: send
+    }
+
+    void PlayerController::setOverallGainValue(double value) {
+        model::EqualizerBand* overallGainBand = playerModel.getEqualizerParameters()->getDbGain();
+        overallGainBand->setValue(value);
+        //todo: send
+    }
+
+    void PlayerController::resetEqualizer() {
+        QList<model::EqualizerBand*>& bands = playerModel.getEqualizerParameters()->getFrequencyDbGains();
+        model::EqualizerBand* overallGainBand = playerModel.getEqualizerParameters()->getDbGain();
+        for (auto band : bands)
+            band->setValue(0.0);
+        overallGainBand->setValue(0.0);
+        //todo: send
+    }
+
+    void PlayerController::errorCloseApplication() {
+        QCoreApplication::exit(-1);
     }
 
     void PlayerController::setupConnection(QBluetoothSocket *bluetoothSocket) {

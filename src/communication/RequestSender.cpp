@@ -14,6 +14,7 @@ namespace communication {
     {}
 
     void RequestSender::sendChangeMediumRequest(const QString &newMedium) {
+        qDebug() << "MediumRequest: " << newMedium;
         communicationProvider->sendMessage(player_protocol::request::ChangeMediumRequest(newMedium.toStdString()));
     }
 

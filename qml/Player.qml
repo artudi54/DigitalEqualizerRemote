@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
+import Models 1.0
 
 Rectangle {
     id: root
@@ -8,14 +9,9 @@ Rectangle {
     height: 550
     color: "#ffffff"
 
-    Label {
-        id: programNameLabel
-        x: 34
-        text: qsTr("Player")
-        anchors.top: parent.top
-        anchors.topMargin: 20
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 26
+    TitleLabel {
+        id: tabTitleLabel
+        text: "Player"
     }
 
     Item {
@@ -132,7 +128,7 @@ Rectangle {
             x: 220
             width: 33
             height: 17
-            text: "00:00"
+            text: playerModel.totalTimeLabel
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.top: progressSlider.bottom
@@ -141,7 +137,7 @@ Rectangle {
 
         Label {
             id: currentTimeLabel
-            text: "00:00"
+            text: playerModel.currentTimeLabel
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.top: progressSlider.bottom
@@ -152,7 +148,7 @@ Rectangle {
     Item {
         id: buttonItem
         y: 447
-        height: 65
+        height: 70
         anchors.right: parent.right
         anchors.rightMargin: 15
         anchors.left: parent.left
@@ -160,53 +156,54 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
 
-        Button {
+        ImageButton {
             id: previousButton
             y: 109
-            width: 45
-            height: 45
-            text: qsTr("P")
+            width: 60
+            height: 60
             anchors.left: parent.left
-            anchors.leftMargin: 34
+            anchors.leftMargin: 20
             anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/resources/icons/previous.png"
+            onClicked: playerController.playPrevious()
         }
 
-        Button {
+        ImageButton {
             id: playPauseButton
             x: -59
             y: 109
-            width: 45
-            height: 45
-            text: qsTr("P/P")
-            anchors.horizontalCenterOffset: -35
+            width: 60
+            height: 60
+            anchors.horizontalCenterOffset: -36
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            source: playerModel.playState === PlayState.PLAYING? "qrc:/resources/icons/pause.png" : "qrc:/resources/icons/play.png"
             onClicked: playerController.switchPlayState()
         }
 
-        Button {
+        ImageButton {
             id: stopButton
             x: 117
             y: 109
-            width: 45
-            height: 45
-            text: qsTr("S")
-            anchors.horizontalCenterOffset: 35
+            width: 60
+            height: 60
+            anchors.horizontalCenterOffset: 36
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/resources/icons/stop.png"
             onClicked: playerController.stopPlayer()
         }
 
-        Button {
+        ImageButton {
             id: nextButton
             x: 198
             y: 109
-            width: 45
-            height: 45
-            text: qsTr("N")
+            width: 60
+            height: 60
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: 34
+            anchors.rightMargin: 20
+            source: "qrc:/resources/icons/next.png"
             onClicked: playerController.playNext()
         }
 

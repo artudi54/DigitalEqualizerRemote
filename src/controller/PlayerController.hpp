@@ -18,9 +18,17 @@ namespace controller {
         Q_INVOKABLE void stopPlayer();
         Q_INVOKABLE void playNext();
         Q_INVOKABLE void playPrevious();
+
         Q_INVOKABLE void setPlayerVolume(unsigned volume);
+
         Q_INVOKABLE void setPlayedSource(unsigned idx);
         Q_INVOKABLE void seekPlayerPosition(double time);
+
+        Q_INVOKABLE void setEqualizerBandValue(double value, unsigned idx);
+        Q_INVOKABLE void setOverallGainValue(double value);
+        Q_INVOKABLE void resetEqualizer();
+
+        Q_INVOKABLE void errorCloseApplication();
 
     private:
         void setupConnection(QBluetoothSocket* bluetoothSocket);

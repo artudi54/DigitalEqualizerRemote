@@ -8,34 +8,15 @@ Rectangle {
     height: 550
     color: "#ffffff"
 
-    Rectangle {
-        id: playlistItem
-        height: 60
-        clip: true
-        radius: 0
-        border.width: 1
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-
-        Label {
-            id: playlistLabel
-            text: qsTr("Playlist")
-            anchors.topMargin: -1
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
-            font.pointSize: 26
-        }
+    TitleLabel {
+        id: tabTitleLabel
+        text: "Playlist"
     }
 
     ListView {
         id: playlistView
-        anchors.top: playlistItem.bottom
-        anchors.topMargin: 0
+        anchors.top: tabTitleLabel.bottom
+        anchors.topMargin: 10
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
@@ -76,7 +57,7 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:2;anchors_x:159;anchors_y:30}D{i:1;anchors_width:349;anchors_x:80;anchors_y:31}
-D{i:3;anchors_height:242;anchors_width:226;anchors_x:43;anchors_y:148}
+    D{i:1;anchors_width:349;anchors_x:80;anchors_y:31}D{i:3;anchors_height:242;anchors_width:226;anchors_x:43;anchors_y:148}
+D{i:2;anchors_height:242;anchors_width:226;anchors_x:159;anchors_y:30}
 }
 ##^##*/

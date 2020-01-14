@@ -24,14 +24,8 @@ ApplicationWindow {
         icon: StandardIcon.Critical
         standardButtons: Qt.Yes | Qt.No
 
-        onAccepted: {
-            playerController.connectToHost()
-        }
-
-        onRejected: {
-            // todo: to controller (to keep mvc)
-            Qt.quit()
-        }
+        onAccepted: playerController.connectToHost()
+        onRejected: playerController.errorCloseApplication();
 
         Component.onCompleted: visible = false
     }
@@ -59,7 +53,7 @@ ApplicationWindow {
 
             Label {
                 id: connectingLabel
-                text: qsTr("Connecting...")
+                text: "Connecting..."
                 font.pointSize: 19
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
@@ -74,7 +68,11 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        currentIndex: 1
 
+        TabButton {
+            text: "Equalizer"
+        }
         TabButton {
             text: "Player"
         }
@@ -89,6 +87,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         currentIndex: bar.currentIndex
+        Equalizer {}
         Player {}
         Playlist {}
     }
